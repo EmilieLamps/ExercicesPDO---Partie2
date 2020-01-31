@@ -24,13 +24,14 @@ include 'verifications.php';
 
                     $sth = $db->prepare('INSERT INTO `patients`(lastname , firstname , birthdate , phone , mail ) VALUE(:lastname, :firstname, :birthdate, :phone, :mail)');
                     // Tableau associatif dans lequel on associe les valeurs aux variables
-                    $sth->execute(array(
-                        ':lastname' => $lastName, 
-                        ':firstname' => $firstName,
-                        ':birthdate' => $birthDate,
-                        ':phone' => $phoneNumber,
-                        ':mail' => $mail
-                    ));
+                    $sth->bindValue(':lastname', $lastName, PDO::PARAM_STR);
+                    $sth-> bindValue(':firstname', $firstName, PDO::PARAM_STR);
+                    $sth-> bindValue(':birthdate', $birthDate, PDO::PARAM_STR);
+                    $sth-> bindValue(':phone', $phoneNumber, PDO::PARAM_STR);
+                    $sth-> bindValue(':mail' , $mail, PDO::PARAM_STR);
+                    
+                    $sth->execute();
+                   
                     $message = 'Le patient ' . $lastName . ' ' . $firstName . ' a bien été enregistré';
                     ?>
                     <p><?= $message ?></p>
