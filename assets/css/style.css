@@ -10,3 +10,10 @@ p {
 label{
     font-size: 1.5rem;
 }
+th{
+    background-color: lightgrey;
+    font-size: 1.5em;
+}
+td{
+    font-size: 1.2rem;
+}

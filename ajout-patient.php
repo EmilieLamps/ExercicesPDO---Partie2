@@ -1,7 +1,7 @@
 <?php
 $page = "Partie 2 "; // Définir la variable pour changer le titre !
 include 'header.php';
-include 'verifications.php';
+require_once 'verifications.php';
 ?>
 <div class="container">
     <div class="row mt-5 justify-content-center">
@@ -9,6 +9,7 @@ include 'verifications.php';
             <div class="jumbotron bg-light text-center">
                 <?php
                 if ($isSubmitted && count($errors) == 0) {
+
                     function connectDb() {
                         require_once 'params.php';
                         $dsn = 'mysql:dbname=' . DB . ';host=' . HOST;
@@ -20,21 +21,27 @@ include 'verifications.php';
                             die('La connexion à la base de données a échoué !');
                         }
                     }
+
                     $db = connectDb();
 
                     $sth = $db->prepare('INSERT INTO `patients`(lastname , firstname , birthdate , phone , mail ) VALUE(:lastname, :firstname, :birthdate, :phone, :mail)');
-                    // Tableau associatif dans lequel on associe les valeurs aux variables
                     $sth->bindValue(':lastname', $lastName, PDO::PARAM_STR);
-                    $sth-> bindValue(':firstname', $firstName, PDO::PARAM_STR);
-                    $sth-> bindValue(':birthdate', $birthDate, PDO::PARAM_STR);
-                    $sth-> bindValue(':phone', $phoneNumber, PDO::PARAM_STR);
-                    $sth-> bindValue(':mail' , $mail, PDO::PARAM_STR);
-                    
+                    $sth->bindValue(':firstname', $firstName, PDO::PARAM_STR);
+                    $sth->bindValue(':birthdate', $birthDate, PDO::PARAM_STR);
+                    $sth->bindValue(':phone', $phoneNumber, PDO::PARAM_STR);
+                    $sth->bindValue(':mail', $mail, PDO::PARAM_STR);
                     $sth->execute();
-                   
+
                     $message = 'Le patient ' . $lastName . ' ' . $firstName . ' a bien été enregistré';
                     ?>
+
                     <p><?= $message ?></p>
+                    <div class="text-center pt-2">
+                        <a href="http://exercicespdo2.info/ajout-patient.php"<button class="btn btn-outline-dark mt-3" type="submit" name="submit" id="registerButton">Enregistrer un nouveau patient</button></a>
+                    </div>
+                    <div class="text-center pt-2">
+                        <a href="http://exercicespdo2.info/index.php" <button class="btn btn-outline-ligth mt-3" type="submit" name="submit" id="homeButton">Retourner à l'accueil</button></a>
+                    </div>
                     <?php
                 } else {
                     ?>
