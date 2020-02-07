@@ -17,14 +17,20 @@ function connectDb() {
 }
 
 $db = connectDb();
-
 $query = 'SELECT * FROM `patients`';
 $usersQueryStat = $db->query($query);
 $usersList = $usersQueryStat->fetchAll(PDO::FETCH_ASSOC);
+
+if (isset($_GET['deleteButton'])) {
+    $sth = $db->prepare('DELETE FROM `patients` WHERE `id`= :id');
+    $sth->bindValue(':id', $_GET['deleteButton'], PDO::PARAM_STR);
+    $sth->execute();
+    // Permet de recharger la page 
+    header("location: liste-patients.php");
+}
 ?>
 <div class="container">
     <div class="jumbotron bg-light pt-5">
-
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
@@ -44,16 +50,14 @@ $usersList = $usersQueryStat->fetchAll(PDO::FETCH_ASSOC);
                         <td class="text-center"><?= $user['firstname'] ?></td>
                         <td class="text-center"><?= $user['lastname'] ?> </td>
                         <td class="text-center">                         
-                            <a  href="profil-patient.php?id=<?=$user['id'] ?>">  <button class="btn btn-outline-success" type="submit" name="submit" id="button">Consulter</button></a>
+                            <a  href="profil-patient.php?id=<?= $user['id'] ?>">  <button class="btn btn-outline-success" type="submit"  id="button">Consulter</button></a>
                         </td>
-                        <td class="text-center">                         
-                            <button class="btn btn-outline-danger" type="submit" name="deleteButton" id="deleteButton">Supprimer</button>
+                        <td>
+                            <a href="javascript:deleteButton(<?= $user['id']; ?>)"><button type="button" class="btn btn-danger">Supprimer </button></a>
                         </td>
-                    </tr>
-
-                    <?php
-                endforeach;
-                ?>
+                        <?php
+                    endforeach;
+                    ?>
             </tbody>
         </table>
     </div>

@@ -3,9 +3,11 @@ $page = "Partie 2 "; // Définir la variable pour changer le titre !
 include 'header.php';
 require_once 'verifications.php';
 $id = '';
+// Récupère l'identifant du patient pour pouvoir être appelé ultérieurement
 if (!empty($_GET['id'])) {
     $id = $_GET['id'];
 }
+
 // Connexion à la BDD
 function connectDb() {
     require_once 'params.php';
@@ -18,26 +20,28 @@ function connectDb() {
         die('La connexion à la base de données a échoué !');
     }
 }
+
 $db = connectDb();
 
-// Préparation de la requête SELECT
+// Préparation et exécution  de la requête SELECT
 $sth = $db->prepare('SELECT * FROM `patients` WHERE `patients`.`id` = :id');
 $sth->bindValue(':id', $id, PDO::PARAM_STR);
 $sth->execute();
 
 
-
+// Condition pour la mise à jour
 $usersList = $sth->fetchAll(PDO::FETCH_ASSOC);
- if ($isSubmitted && count($errors) == 0) {
-$sth= $db->prepare('UPDATE `patients` SET `lastname` = :lastname, `firstname` = :firstname, `birthdate` = :birthdate, `phone`= :phone, `mail` = :mail WHERE `id`= :id');
-$sth->bindValue(':id', $id, PDO::PARAM_STR);
-$sth->bindValue(':lastname', $lastName, PDO::PARAM_STR);
-$sth->bindValue(':firstname', $firstName, PDO::PARAM_STR);
-$sth->bindValue(':birthdate', $birthDate, PDO::PARAM_STR);
-$sth->bindValue(':phone', $phoneNumber, PDO::PARAM_STR);
-$sth->bindValue(':mail', $mail, PDO::PARAM_STR);
-$sth->execute();
- }
+if ($isSubmitted && count($errors) == 0) {
+    $sth = $db->prepare('UPDATE `patients` SET `lastname` = :lastname, `firstname` = :firstname, `birthdate` = :birthdate, `phone`= :phone, `mail` = :mail WHERE `id`= :id');
+    $sth->bindValue(':id', $id, PDO::PARAM_STR);
+    $sth->bindValue(':lastname', $lastName, PDO::PARAM_STR);
+    $sth->bindValue(':firstname', $firstName, PDO::PARAM_STR);
+    $sth->bindValue(':birthdate', $birthDate, PDO::PARAM_STR);
+    $sth->bindValue(':phone', $phoneNumber, PDO::PARAM_STR);
+    $sth->bindValue(':mail', $mail, PDO::PARAM_STR);
+    $sth->execute();
+}
+// Boucle pour permettre de lister ou d'afficher chaque patient lors des requêtes d'affichage ou de mise à jour
 foreach ($usersList as $value) {
     
 }
@@ -79,6 +83,5 @@ foreach ($usersList as $value) {
     </div>
 </div>
 <?php
-
 include 'footer.php';
 ?>

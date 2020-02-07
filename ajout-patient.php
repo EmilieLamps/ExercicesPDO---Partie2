@@ -40,7 +40,10 @@ require_once 'verifications.php';
                         <a href="http://exercicespdo2.info/ajout-patient.php"<button class="btn btn-outline-dark mt-3" type="submit" name="submit" id="registerButton">Enregistrer un nouveau patient</button></a>
                     </div>
                     <div class="text-center pt-2">
-                        <a href="http://exercicespdo2.info/index.php" <button class="btn btn-outline-ligth mt-3" type="submit" name="submit" id="homeButton">Retourner à l'accueil</button></a>
+                        <a href="http://exercicespdo2.info/index.php" <button class="btn btn-light mt-3" type="submit" name="homeButton" id="homeButton">Retourner à l'accueil</button></a>
+                    </div>
+                    <div class="text-center pt-2">
+                        <a href="http://exercicespdo2.info/liste-patients.php" <button class="btn btn-litht mt-3" type="submit" name="patientslList" id="patientslList">Voir la liste des patients</button></a>
                     </div>
                     <?php
                 } else {

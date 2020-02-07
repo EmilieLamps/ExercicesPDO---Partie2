@@ -35,7 +35,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="http://exercicespdo2.info/rendezvous.php">Rendez-vous</a>
                     </li>
-
                 </ul>
                 <ul class="navbar-nav ml-auto nav-flex-icons">
                     <li class="nav-item">
