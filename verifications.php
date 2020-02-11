@@ -2,11 +2,13 @@
 
 $isSubmitted = false;
 
-$lastName = $firstName = $birthDate = $phoneNumber = $mail = '';
+$lastName = $firstName = $birthDate = $phoneNumber = $mail = $appointmentDate = $appointmentHour = '';
 
 $regexName = "/^[A-Za-zéÉ][A-Za-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]+((-| )[A-Za-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ]+)?$/";
 $regexPhoneNumber = "/^0[67](\.[0-9]{2}){4}$/";
 $regexDate = "/^((?:19|20)[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/";
+// Regex qui accepte les heures de 09:00 à 18:00
+$regexHour = "/^((09)|(1[0-8]))\:(([0]{2})|(30))$/";
 
 $errors = [];
 
@@ -34,14 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors['birthDate'] = 'Le format valide est aaaa-mm-jj !';
     }
     // Contrôle du téléphone
-   $phoneNumber = trim(htmlspecialchars($_POST['phoneNumber']));
+    $phoneNumber = trim(htmlspecialchars($_POST['phoneNumber']));
     if (empty($phoneNumber)) {
-      $errors['phoneNumber'] = 'Veuillez renseigner un numéro de téléphone';
+        $errors['phoneNumber'] = 'Veuillez renseigner un numéro de téléphone';
     } elseif (!preg_match($regexPhoneNumber, $phoneNumber)) {
-     $errors['phoneNumber'] = 'Le numéro saisi n\'est pas valide !';
-    }    
-         //contôle de l'email
-     $mail = trim(htmlspecialchars($_POST['mail']));
+        $errors['phoneNumber'] = 'Le numéro saisi n\'est pas valide !';
+    }
+    //contôle de l'email
+    $mail = trim(htmlspecialchars($_POST['mail']));
     if (empty($mail)) {
         $errors['mail'] = 'Veuillez renseigner un email';
     } elseif (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {

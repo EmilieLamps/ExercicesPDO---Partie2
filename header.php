@@ -33,6 +33,12 @@
                         <a class="nav-link" href="http://exercicespdo2.info/profil-patient.php">Profil du patient</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="http://exercicespdo2.info/ajout-rendezvous.php">Ajouter un rendez-vous</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://exercicespdo2.info/liste-rendezvous.php">Liste des rendez-vous</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="http://exercicespdo2.info/rendezvous.php">Rendez-vous</a>
                     </li>
                 </ul>
